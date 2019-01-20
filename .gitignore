@@ -2,4 +2,5 @@
 *.pdb
 *.cache
 
-./idea
+#Rider config files
+.idea
