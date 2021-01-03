@@ -1,28 +1,30 @@
 using Npgsql;
+using Dapper;
+using System.Linq;
 
-namespace EvenSourcing.Tools
+namespace DapperExample.Tools
 {
-    public class SimpleDapperExamples
+    public static class SimpleDapperExamples
     {
-        public void DapperQuery()
+        public static void DapperQuery<EType>()
         {
             using (var connection = new NpgsqlConnection(Settings.ConnectionString))
             {
                 string sqlOrderDetails = "SELECT TOP 5 * FROM OrderDetails;";
-                var orderDetails = connection.Query<EventDetail>(sqlOrderDetails).ToList();
+                var orderDetails = connection.Query<EType>(sqlOrderDetails).ToList();
             }
         }
 
-        public void DapperQueryFirstOrDefault()
+        public static void DapperQueryFirstOrDefault<EType>()
         {
             using (var connection = new NpgsqlConnection(Settings.ConnectionString))
             {
                 string sqlOrderDetail = "SELECT * FROM OrderDetails WHERE OrderDetailID = @OrderDetailID;";
-                var orderDetail = connection.QueryFirstOrDefault<EventDetail>(sqlOrderDetail, new { OrderDetailID = 1 });
+                var orderDetail = connection.QueryFirstOrDefault<EType>(sqlOrderDetail, new { OrderDetailID = 1 });
             }
         }
 
-        public void DapperExecute()
+        public static void DapperExecute<EType>()
         {
             string sqlCustomerInsert = "INSERT INTO EventDetails (EventType) Values (@EventType);";
 

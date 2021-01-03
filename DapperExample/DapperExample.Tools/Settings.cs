@@ -1,4 +1,4 @@
-namespace EventSourcing.Tools
+namespace DapperExample.Tools
 {
     public static class Settings
     {

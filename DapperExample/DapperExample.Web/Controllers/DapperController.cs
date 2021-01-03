@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using DapperExample.Web.Models;
 
 namespace DapperExample.Web.Controllers
 {
@@ -10,8 +9,9 @@ namespace DapperExample.Web.Controllers
     public class DapperController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<Event> Get()
         {
+            return new List<Event>();
         }
     }
 }
