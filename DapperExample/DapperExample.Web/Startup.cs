@@ -28,6 +28,7 @@ namespace DapperExample.Web
         {
             services.AddControllers();
             services.AddScoped<PostgresDbConnectionProvider>();
+            services.AddScoped<SimpleDapperExamples>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
