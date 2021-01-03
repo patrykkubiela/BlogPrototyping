@@ -1,6 +1,22 @@
+# Rider config files
+.idea
+
+# VS config files
+.vscode
+.vs
+
+# User config
+*.suo
+*.user
+
+#Build result files
+bin
+obj
+packages
 *.dll
 *.pdb
 *.cache
 
-#Rider config files
-.idea
+
+# ReSharper
+_ReSharper.*
