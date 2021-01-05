@@ -1,4 +1,3 @@
-using Npgsql;
 using Dapper;
 using System.Linq;
 
@@ -17,8 +16,8 @@ namespace DapperExample.Tools
         {
             using (var connection = _connectionProvider.GetDbConnection())
             {
-                string sqlOrderDetails = "SELECT TOP 5 * FROM OrderDetails;";
-                var orderDetails = connection.Query<EType>(sqlOrderDetails).ToList();
+                string sqlEvents = "SELECT TOP 5 * FROM Events;";
+                var orderDetails = connection.Query<EType>(sqlEvents).ToList();
             }
         }
 
@@ -26,18 +25,25 @@ namespace DapperExample.Tools
         {
             using (var connection = _connectionProvider.GetDbConnection())
             {
-                string sqlOrderDetail = "SELECT * FROM OrderDetails WHERE OrderDetailID = @OrderDetailID;";
-                var orderDetail = connection.QueryFirstOrDefault<EType>(sqlOrderDetail, new { OrderDetailID = 1 });
+                string sqlVersion = "SELECT * FROM Events WHERE Version = @OrderDetailID;";
+                var orderDetail = connection.QueryFirstOrDefault<EType>(sqlVersion, new { Version = 35 });
             }
         }
 
-        public void DapperExecute<EType>()
+        public void DapperExecuteInsert(Event entity)
         {
-            string sqlCustomerInsert = "INSERT INTO EventDetails (EventType) Values (@EventType);";
+            string sqlEventInsert = "INSERT INTO Events (AggregateId, Data, SequenceNumber, Version) Values (@AggregateId, @Data, @SequenceNumber, @Version);";
 
             using (var connection = _connectionProvider.GetDbConnection())
             {
-                var affectedRows = connection.Execute(sqlCustomerInsert, new { CustomerName = "Mark" });
+                var affectedRows = connection.Execute(sqlEventInsert,
+                new
+                {
+                    AggregateId = entity.AggregateId, 
+                    Data = entity.Data,
+                    SequenceNumber = entity.SequenceNumber,
+                    Version = entity.Version
+                });
             }
         }
     }
