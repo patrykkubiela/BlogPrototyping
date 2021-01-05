@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using DapperExample.Web.Models;
-using DapperExample.Tools;
 
 namespace DapperExample.Web.Controllers
 {
@@ -19,7 +18,20 @@ namespace DapperExample.Web.Controllers
         [HttpGet]
         public IEnumerable<Event> Get()
         {
-            return new List<Event>();
+            return _simpleDapper.DapperQuery<Event>("SELECT TOP 5 * FROM Events;");
+        }
+
+        [HttpGet]
+        [Route("single")]
+        public Event GetSingle()
+        {
+            return _simpleDapper.DapperQueryFirstOrDefault<Event>("SELECT * FROM Events WHERE Version = @OrderDetailID;");
+        }
+
+        [HttpPut]
+        public int InsertEvent([FromBody]Event singleEvent)
+        {
+            return _simpleDapper.DapperExecuteInsert("INSERT INTO Events (AggregateId, Data, SequenceNumber, Version) Values (@AggregateId, @Data, @SequenceNumber, @Version);", singleEvent);
         }
     }
 }
