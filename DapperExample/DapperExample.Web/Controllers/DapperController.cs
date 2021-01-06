@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using DapperExample.Web.Models;
+using System;
 
 namespace DapperExample.Web.Controllers
 {
@@ -18,20 +19,27 @@ namespace DapperExample.Web.Controllers
         [HttpGet]
         public IEnumerable<Event> Get()
         {
-            return _simpleDapper.DapperQuery<Event>("SELECT TOP 5 * FROM Events;");
+            return _simpleDapper.DapperQuery<Event>(@"SELECT * FROM public.""Events"";");
         }
 
         [HttpGet]
-        [Route("single")]
-        public Event GetSingle()
+        [Route("first")]
+        public Event GetFirst()
         {
-            return _simpleDapper.DapperQueryFirstOrDefault<Event>("SELECT * FROM Events WHERE Version = @OrderDetailID;");
+            return _simpleDapper.DapperQueryFirstOrDefault<Event>(@"SELECT * FROM public.""Events"" WHERE ""Version"" = @OrderDetailID;");
         }
 
         [HttpPut]
-        public int InsertEvent([FromBody]Event singleEvent)
+        public int InsertEvent([FromBody]QueryEvent singleEvent)
         {
-            return _simpleDapper.DapperExecuteInsert("INSERT INTO Events (AggregateId, Data, SequenceNumber, Version) Values (@AggregateId, @Data, @SequenceNumber, @Version);", singleEvent);
+            var sqlQuery = @"INSERT INTO public.""Events"" (""AggregateId"", ""Data"", ""SequenceNumber"", ""Version"") VALUES (@AggregateId, @Data, @SequenceNumber, @Version);";
+            var byteDataValue = System.Text.Encoding.UTF8.GetBytes(singleEvent.Data);
+            return _simpleDapper.DapperExecuteInsert(sqlQuery, new Event{
+                AggregateId = singleEvent.AggregateId,
+                Data = byteDataValue,
+                SequenceNumber = singleEvent.SequenceNumber,
+                Version = singleEvent.Version
+            });
         }
     }
 }

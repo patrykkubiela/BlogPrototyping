@@ -10,7 +10,7 @@ namespace DapperExample.Tools
         {
             var connection = new NpgsqlConnection(Settings.ConnectionString);
 
-            string insertEventSqlCommand = @"INSERT INTO EventDetails (AggregateId, Data, SequenceNumber, Version) VALUES (@AggregateId, @Data, @SequenceNumber, @Version)";
+            var insertEventSqlCommand = @"INSERT INTO public.""Events"" (""AggregateId"", ""Data"", ""SequenceNumber"", ""Version"") VALUES (@AggregateId, @Data, @SequenceNumber, @Version);";
             var randomByteArray = GetRandomByteArray(100);
 
             for (int i = 0; i < 400000; i++)
