@@ -41,5 +41,12 @@ namespace DapperExample.Web.Controllers
                 Version = singleEvent.Version
             });
         }
+
+        [HttpGet]
+        public int InsertMany()
+        {
+            var insertEventSqlCommand = @"INSERT INTO public.""Events"" (""AggregateId"", ""Data"", ""SequenceNumber"", ""Version"") VALUES (@AggregateId, @Data, @SequenceNumber, @Version);";
+            return _simpleDapper.DapperExecuteManyInLoop(insertEventSqlCommand);
+        }
     }
 }

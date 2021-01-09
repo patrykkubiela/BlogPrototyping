@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using DapperExample.Tools;
 using DapperExample.Web.Models;
+using System;
 
 namespace DapperExample.Web
 {
@@ -40,14 +41,37 @@ namespace DapperExample.Web
                 var affectedRows = connection.Execute(insertQuery,
                 new
                 {
-                    AggregateId = singleEvent.AggregateId, 
+                    AggregateId = singleEvent.AggregateId,
                     Data = singleEvent.Data,
                     SequenceNumber = singleEvent.SequenceNumber,
                     Version = singleEvent.Version
                 });
-                
+
                 return affectedRows;
             }
+        }
+
+        public int DapperExecuteManyInLoop(string insertQuery)
+        {
+            var randomByteArray = Utils.GetRandomByteArray(100);
+
+            using (var connection = _connectionProvider.GetDbConnection())
+            {
+                for (int i = 0; i < 200000; i++)
+                {
+                    return connection.Execute(insertQuery,
+                    new
+                    {
+                        AggregateId = Guid.NewGuid(),
+                        Data = randomByteArray,
+                        SequenceNumber = i,
+                        Version = i
+                    });
+
+                }
+            }
+            
+            return 0;
         }
     }
 }
