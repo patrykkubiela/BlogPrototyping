@@ -1,4 +1,4 @@
-# Docker-Compose for [programista-doswiadczony] (https://programista-doswiadczony.pl/) website post about [Dapper lib] (https://github.com/StackExchange/Dapper)
+# Docker-Compose for [programista-doswiadczony](https://programista-doswiadczony.pl/) website post about [Dapper library](https://github.com/StackExchange/Dapper)
 
 Next to this readme file you see docker-compose.yml file.
 It's placed here for easy build and run two docker containers. One for postgresql server and second one for pgadmin container.
@@ -8,8 +8,8 @@ Below are the only command that you will need to use mentioned docker-compose.ym
 OFC you will need it if you are docker newbie ;-)
 
 ## 1. Prerequisites
-- Install [Docker] (https://www.docker.com/)
-- Install [Docker-compose] (https://docs.docker.com/compose/install/)
+- Install [Docker](https://www.docker.com/)
+- Install [Docker-compose](https://docs.docker.com/compose/install/)
 
 ## 2. Build and Run containers
 
@@ -41,4 +41,4 @@ If you want to remove those containers, images, volumes and networks you have to
 docker-compose down
 ```
 
-## 3. For the rest of docker informations I refer to the [docker-compose documentation] (https://docs.docker.com/compose/)
+## 3. For the rest of docker informations I refer to the [docker-compose documentation](https://docs.docker.com/compose/)
