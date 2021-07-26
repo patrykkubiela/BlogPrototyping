@@ -1,2 +1,2 @@
-# ProgramistaDoswiadczonyBlog
+# Blog
 Blog code samples 
